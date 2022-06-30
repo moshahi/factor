@@ -1,0 +1,43 @@
+
+<%- include("includes/header.ejs") %>
+<% if(error.length > 0){%>
+    <div class="col-sm-12 text-center alert alert-warning">
+        <%= error %> 
+    </div>
+<% } %> 
+<div class="col-md-6 align-center justify-content-center dt-center align-items-center">
+    <!-- Horizontal Form -->
+    <div class="card card-info">
+      <div class="card-header">
+        <h3 class="card-title">ورود به داشبورد</h3>
+      </div>
+      <!-- /.card-header -->
+      <!-- form start -->
+      <form class="form-horizontal" action="/users/login" method="post">
+        <div class="card-body">
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">موبایل</label>
+
+            <div class="col-sm-6 text-center">
+              <input type="text" class="form-control" id="inputEmail3" placeholder="شماره موبایل خود را وارد نمایید" name="mobile">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">پسورد</label>
+
+            <div class="col-sm-6 text-center">
+              <input type="password" class="form-control" id="inputPassword3" placeholder="پسورد را وارد کنید" name="password">
+            </div>
+          </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          <button type="submit" class="btn btn-info">ورود</button>
+        </div>
+        <!-- /.card-footer -->
+      </form>
+    </div>
+    <%- include("includes/footer.ejs") %>
+</body>
+
+</html>

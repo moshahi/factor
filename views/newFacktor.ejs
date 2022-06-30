@@ -1,0 +1,176 @@
+<%- include("includes/header.ejs") %>
+
+  </head>
+
+  <body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+
+      <!-- Navbar -->
+      <%- include("includes/dash-nav.ejs") %>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <%- include("includes/dash-aside-menu.ejs") %>
+          <!-- Content Wrapper. Contains page content -->
+          <div class="content-wrapper">
+            <% if (msg.length > 0) { %>
+              <% if (msg == "عملیات با موفقیت انجام شد") { %>
+                <div class="alert alert-success text-center">
+                  <%= msg %>
+                </div>
+              <% } else { %>
+                <div class="alert alert-danger text-center">
+                  <%= msg %>
+                </div>
+             <% } %>
+            <% } %>
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+              <div class="container-fluid">
+                <div class="row mb-2">
+                  <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">
+                      <%= pageTitle %>
+                    </h1>
+                  </div><!-- /.col -->
+                  <div class="col-sm-6">
+                  </div><!-- /.col -->
+                </div><!-- /.row -->
+              </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <section class="content">
+              <div class="card">
+                <div class="card-body register-card-body">
+
+                  <form action="/users/newUser" method="post">
+                    <div class="input-group mb-3">
+                      <input required type="text" class="form-control" placeholder="نام مشتری" name="customerFullName">
+                      <div class="input-group-append">                       
+                      </div>
+                    </div>
+                    <div class="input-group mb-3">
+                      <input required type="text" class="form-control" placeholder="مبایل مشتری" name="customerMobile">
+                      <div class="input-group-append">
+                      </div>
+                    </div>
+                    <div class="input-group mb-3">
+                      <textarea class="form-control" name="customerAddress" placeholder="آدرس مشتری"></textarea>
+                      <div class="input-group-append">
+                      </div>
+                    </div>
+                    <div class="input-group mb-3">
+                      <select class="form-control" name="" id="products" onchange="query()">
+                        <option value="">انتخاب کنید</option>
+                      </select>
+                      
+                      </div>
+                      <div class="input-group mb-3">
+                        <input required type="text" class="form-control" placeholder="مبلغ محصول" readonly id="productPrice">
+                        <div class="input-group-append">
+                        </div>
+                      </div>
+                      <div class="input-group mb-3">
+                        <input required type="text" class="form-control" placeholder="تخفیف" readonly id="takhfif">
+                        <div class="input-group-append">
+                        </div>
+                      </div>
+                      <div class="input-group mb-3">
+                        <input required type="text" class="form-control" placeholder="تعداد" name="customerMobile" id="meqdar" onchange="query2()">
+                        <div class="input-group-append">
+                        </div>
+                      </div>
+                      <div class="input-group mb-3">
+                        <input required type="text" class="form-control" placeholder="مبلغ نهایی فاکتور" name="customerMobile" readonly id="finalPrice">
+                        <div class="input-group-append">
+                        </div>
+                      </div>
+                    
+                    <div class="input-group mb-3">
+                      <textarea class="form-control" name="description" placeholder="توضیحات فاکتور"></textarea>
+                      <div class="input-group-append">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <!-- /.col -->
+                      <div class="col-12">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">ثبت محصول</button>
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                  </form>
+                </div>
+                <!-- /.form-box -->
+              </div><!-- /.card -->
+            </section>
+            <!-- /.Left col -->
+            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+
+            <!-- right col -->
+          </div>
+          <!-- /.row (main row) -->
+    </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- jQuery -->
+    <%- include("includes/footer.ejs") %>
+    <script>
+      $(document).ready(function(){
+        const url = `http://localhost:1000/api/products/1.0.0`;
+        fetch(url)
+        .then(respons =>{
+          respons.json().then(resualt =>{
+            for(let res of resualt) {
+              const text = document.createTextNode(res.productName)
+              const option = document.createElement("option")
+              option.setAttribute("value", res._id)
+              option.appendChild(text)
+              document.getElementById("products").appendChild(option)
+            }
+          })
+        })
+      })
+    </script>
+    <script>
+      function query() {
+        let productPrice = document.getElementById("productPrice")
+        let meqdar = document.getElementById("meqdar")
+        let finalPrice = document.getElementById("finalPrice")
+        let takhfif = document.getElementById("takhfif")
+        const select = document.getElementById("products")
+        const url = `http://localhost:1000/api/products/1.0.0/${select.value}`;
+        fetch(url)
+        .then(data =>{
+          data.json()
+          .then(response =>{
+            productPrice.value = response.cost;
+            takhfif.value = response.takhfif
+          })
+        })
+      }
+    </script>
+    <script>
+      function query2(){
+        let productPrice = document.getElementById("productPrice")
+        let meqdar = document.getElementById("meqdar")
+        let finalPrice = document.getElementById("finalPrice")
+        let takhfif = document.getElementById("takhfif")
+
+        finalPrice.value = productPrice.value * meqdar.value - takhfif.value;
+      }
+    </script>
+  </body>
+  </html>

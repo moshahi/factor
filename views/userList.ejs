@@ -1,0 +1,73 @@
+<%- include("includes/header.ejs") %> 
+
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+  <!-- Navbar -->
+  <%- include("includes/dash-nav.ejs") %> 
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <%- include("includes/dash-aside-menu.ejs") %> 
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark"><%= pageTitle %></h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="card">
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>آی دی کاربر</th>
+                  <th>نام کاربر</th>
+                  <th>موبایل کاربر</th>
+                  <th>تاریخ ساخت</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <% resualt.forEach(element =>{ %>
+                        <tr>
+                            <td><%= element._id %> </td>
+                            <td><%= element.fullName %></td>
+                            <td><%= element.mobile %></td>
+                            <td> <%= moment(element.createdAt).locale('fa').format('YYYY/MM/DD HH:SS') %> </td>
+                          </tr>
+                   <% }) %>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<%- include("includes/footer.ejs") %> 
+</body>
+</html>
